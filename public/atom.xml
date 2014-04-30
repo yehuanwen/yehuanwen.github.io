@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://yehuanwen.github.io/atom.xml" rel="self"/>
   <link href="http://yehuanwen.github.io/"/>
-  <updated>2014-04-30T20:30:06+08:00</updated>
+  <updated>2014-04-30T20:39:50+08:00</updated>
   <id>http://yehuanwen.github.io/</id>
   <author>
     <name><![CDATA[yehuanwen]]></name>
@@ -40,7 +40,9 @@
     <link href="http://yehuanwen.github.io/blog/2014/04/30/title/"/>
     <updated>2014-04-30T12:49:37+08:00</updated>
     <id>http://yehuanwen.github.io/blog/2014/04/30/title</id>
-    <content type="html"><![CDATA[<h4>Objective-C代码</h4>
+    <content type="html"><![CDATA[<p><strong>markdown blog</strong></p>
+
+<h4>Objective-C代码</h4>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objectivec'><span class='line'><span class="p">[</span><span class="n">object</span> <span class="n">message</span><span class="p">];</span>
