@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Test | My Octopress Blog]]></title>
+  <link href="http://yehuanwen.github.io/blog/categories/test/atom.xml" rel="self"/>
+  <link href="http://yehuanwen.github.io/"/>
+  <updated>2014-07-14T10:51:22+08:00</updated>
+  <id>http://yehuanwen.github.io/</id>
+  <author>
+    <name><![CDATA[yehuanwen]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Test]]></title>
+    <link href="http://yehuanwen.github.io/blog/2014/07/14/test/"/>
+    <updated>2014-07-14T10:11:01+08:00</updated>
+    <id>http://yehuanwen.github.io/blog/2014/07/14/test</id>
+    <content type="html"><![CDATA[<p>Test</p>
+]]></content>
+  </entry>
+  
+</feed>
