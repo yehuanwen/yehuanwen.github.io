@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://yehuanwen.github.io/atom.xml" rel="self"/>
   <link href="http://yehuanwen.github.io/"/>
-  <updated>2014-07-14T10:51:22+08:00</updated>
+  <updated>2014-07-26T10:08:16+08:00</updated>
   <id>http://yehuanwen.github.io/</id>
   <author>
     <name><![CDATA[yehuanwen]]></name>
@@ -12,6 +12,121 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GFM Test]]></title>
+    <link href="http://yehuanwen.github.io/blog/2014/07/26/gfm-test/"/>
+    <updated>2014-07-26T10:07:46+08:00</updated>
+    <id>http://yehuanwen.github.io/blog/2014/07/26/gfm-test</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s very easy to make some words <strong>bold</strong> and other words <em>italic</em> with Markdown. You can even <a href="http://google.com">link to Google!</a>.</p>
+
+<p>Sometimes you want numbered lists:</p>
+
+<ol>
+<li>One</li>
+<li>Two</li>
+<li>Three
+
+<ol>
+<li>Three</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Sometimes you want bullet points:</p>
+
+<ul>
+<li>Start a line with a star
+
+<ul>
+<li>Start a line with a star</li>
+</ul>
+</li>
+<li>Profit!</li>
+</ul>
+
+
+<p>Alternatively,</p>
+
+<ul>
+<li>Dashes work just as well</li>
+<li>And if you have sub points, put two spaces before the dash or star:
+
+<ul>
+<li>Like this</li>
+<li>And this</li>
+</ul>
+</li>
+</ul>
+
+
+<p>If you want to embed images, this is how you do it:</p>
+
+<p><img src="https://octodex.github.com/images/yaktocat.png" alt="Image of Yaktocat" /></p>
+
+<h1>Structured documents</h1>
+
+<p>Sometimes it&rsquo;s useful to have different levels of headings to structure your documents. Start lines with a <code>#</code> to create headings. Multiple <code>##</code> in a row denote smaller heading sizes.</p>
+
+<h3>This is a third-tier heading</h3>
+
+<p>You can use  one <code>#</code> all the way up to <code>######</code> six for different heading sizes.</p>
+
+<p>If you&rsquo;d like to quote someone, use the > character before the line:</p>
+
+<blockquote><p>Coffee. The finest organic suspension ever devised&hellip; I beat the Borg with it.
+&ndash; Captain Janeway</p></blockquote>
+
+<p>There are many different ways to style code with GitHub&rsquo;s markdown. If you have inline code blocks, wrap them in backticks: <code>var example = true</code>.  If you&rsquo;ve got a longer block of code, you can indent with four spaces:</p>
+
+<pre><code>if (isAwesome){
+  return true
+}
+</code></pre>
+
+<p>GitHub also supports something called code fencing, which allows for multiple lines without indentation:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if (isAwesome){
+</span><span class='line'>  return true
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And if you&rsquo;d like to use syntax highlighting, include the language:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">isAwesome</span><span class="p">){</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">true</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GitHub supports many extras in Markdown that help you reference and link to people. If you ever want to direct a comment at someone, you can prefix their name with an @ symbol: Hey @kneath — love your sweater!</p>
+
+<p>But I have to admit, tasks lists are my favorite:</p>
+
+<ul>
+<li>[x] This is a complete item</li>
+<li>[ ] This is an incomplete item</li>
+</ul>
+
+
+<p>And, of course emoji! :sparkles: :camel: :boom:</p>
+
+<p>Here&rsquo;s our logo (hover to see the title text):</p>
+
+<p>Inline-style:
+<img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" title="Logo Title Text 1" alt="alt text" /></p>
+
+<p>Reference-style:
+![alt text][logo]</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Test]]></title>
