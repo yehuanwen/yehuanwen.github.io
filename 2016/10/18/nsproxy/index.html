@@ -84,22 +84,19 @@
 
 
 
-<meta name="description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
-实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
-1_timer = [NSTimer scheduledTimerWithTimeInterval:">
+<meta name="description" content="NSProxy 作为 Objective-C 的一个根类，本身只是提供了少量的几个方法和实现了 NSObject 协议的方法，很多方法的调用都找不到实现，从而触发消息转发的动作，因此适合作为消息转发的代理类。利用 NSProxy 适合做消息转发的特性，可以实现对象之间的弱引用和对象的延迟初始化。
+实现弱引用(Weak Reference)使用场景：在 View Controller 里面使用 NS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用 NSProxy 实现弱引用和延迟初始化">
 <meta property="og:url" content="http://yhw.herokuapp.com/2016/10/18/nsproxy/index.html">
 <meta property="og:site_name" content="叶焕文">
-<meta property="og:description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
-实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
-1_timer = [NSTimer scheduledTimerWithTimeInterval:">
-<meta property="og:updated_time" content="2016-10-18T10:47:46.000Z">
+<meta property="og:description" content="NSProxy 作为 Objective-C 的一个根类，本身只是提供了少量的几个方法和实现了 NSObject 协议的方法，很多方法的调用都找不到实现，从而触发消息转发的动作，因此适合作为消息转发的代理类。利用 NSProxy 适合做消息转发的特性，可以实现对象之间的弱引用和对象的延迟初始化。
+实现弱引用(Weak Reference)使用场景：在 View Controller 里面使用 NS">
+<meta property="og:updated_time" content="2016-10-18T13:37:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用 NSProxy 实现弱引用和延迟初始化">
-<meta name="twitter:description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
-实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
-1_timer = [NSTimer scheduledTimerWithTimeInterval:">
+<meta name="twitter:description" content="NSProxy 作为 Objective-C 的一个根类，本身只是提供了少量的几个方法和实现了 NSObject 协议的方法，很多方法的调用都找不到实现，从而触发消息转发的动作，因此适合作为消息转发的代理类。利用 NSProxy 适合做消息转发的特性，可以实现对象之间的弱引用和对象的延迟初始化。
+实现弱引用(Weak Reference)使用场景：在 View Controller 里面使用 NS">
 
 
 
@@ -331,10 +328,10 @@
       
 
       
-        <p>NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。</p>
-<h2 id="实现弱引用-Weak-Reference"><a href="#实现弱引用-Weak-Reference" class="headerlink" title="实现弱引用(Weak Reference)"></a>实现弱引用(Weak Reference)</h2><p>使用场景：解决使用 NSTimer 导致的内存泄露，</p>
+        <p>NSProxy 作为 Objective-C 的一个根类，本身只是提供了少量的几个方法和实现了 NSObject 协议的方法，很多方法的调用都找不到实现，从而触发消息转发的动作，因此适合作为消息转发的代理类。利用 NSProxy 适合做消息转发的特性，可以实现对象之间的弱引用和对象的延迟初始化。</p>
+<h2 id="实现弱引用-Weak-Reference"><a href="#实现弱引用-Weak-Reference" class="headerlink" title="实现弱引用(Weak Reference)"></a>实现弱引用(Weak Reference)</h2><p>使用场景：在 View Controller 里面使用 NSTimer 每隔一定时间执行指定事件，由于 RunLoop 强引用 NSTimer，而 NSTimer 通过 Target 强引用 View Controller，导致 View Controller 释放不了，造成内存泄露。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:[[WeakProxy alloc] initWithTarget:self] selector:@selector(timerFire:) userInfo:nil repeats:YES];</div></pre></td></tr></table></figure>
-<p>这样子就可以打破 RunLoop 和 self 之间的强引用了。</p>
+<p>这样子就可以打破 RunLoop 和 View Controller 之间的强引用了。</p>
 <p>具体实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface WeakProxy : NSProxy</div><div class="line"></div><div class="line">- (instancetype)initWithTarget:(id)target;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation WeakProxy &#123;</div><div class="line">    __weak id _target;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithTarget:(id)target &#123;</div><div class="line">    _target = target;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel &#123;</div><div class="line">    return [_target methodSignatureForSelector:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</div><div class="line">    SEL sel = invocation.selector;</div><div class="line">    if ([_target respondsToSelector:sel]) &#123;</div><div class="line">        [invocation invokeWithTarget:_target];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)respondsToSelector:(SEL)aSelector &#123;</div><div class="line">    return [_target respondsToSelector:aSelector];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 <h2 id="实现延迟初始化-Lazy-Initialization"><a href="#实现延迟初始化-Lazy-Initialization" class="headerlink" title="实现延迟初始化(Lazy Initialization)"></a>实现延迟初始化(Lazy Initialization)</h2><p>使用场景：将对象的初始化延迟到具体方法的调用，</p>
