@@ -84,12 +84,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="叶焕文">
-<meta property="og:url" content="http://yhw.herokuapp.com/index.html">
+<meta name="description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
+实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
+1_timer = [NSTimer scheduledTimerWithTimeInterval:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 NSProxy 实现弱引用和延迟初始化">
+<meta property="og:url" content="http://yhw.herokuapp.com/2016/10/18/nsproxy/index.html">
 <meta property="og:site_name" content="叶焕文">
+<meta property="og:description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
+实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
+1_timer = [NSTimer scheduledTimerWithTimeInterval:">
+<meta property="og:updated_time" content="2016-10-18T10:47:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="叶焕文">
+<meta name="twitter:title" content="利用 NSProxy 实现弱引用和延迟初始化">
+<meta name="twitter:description" content="NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。
+实现弱引用(Weak Reference)使用场景：解决使用 NSTimer 导致的内存泄露，
+1_timer = [NSTimer scheduledTimerWithTimeInterval:">
 
 
 
@@ -110,9 +120,9 @@
 
 
 
-  <link rel="canonical" href="http://yhw.herokuapp.com/"/>
+  <link rel="canonical" href="http://yhw.herokuapp.com/2016/10/18/nsproxy/"/>
 
-  <title> 叶焕文 </title>
+  <title> 利用 NSProxy 实现弱引用和延迟初始化 | 叶焕文 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -142,9 +152,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,9 +262,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -276,10 +284,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/10/18/nsproxy/" itemprop="url">
-                  利用 NSProxy 实现弱引用和延迟初始化
-                </a>
+                利用 NSProxy 实现弱引用和延迟初始化
               
             
           </h1>
@@ -326,9 +331,7 @@
       
 
       
-        
-          
-            <p>NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。</p>
+        <p>NSProxy 作为 Objective-C 的一个根类，除了自身提供的少量几个方法和实现 NSObject 协议的方法外，很多方法的调用都找不到实现，容易触发消息转发的动作，适合作为消息转发的代理类。</p>
 <h2 id="实现弱引用-Weak-Reference"><a href="#实现弱引用-Weak-Reference" class="headerlink" title="实现弱引用(Weak Reference)"></a>实现弱引用(Weak Reference)</h2><p>使用场景：解决使用 NSTimer 导致的内存泄露，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:[[WeakProxy alloc] initWithTarget:self] selector:@selector(timerFire:) userInfo:nil repeats:YES];</div></pre></td></tr></table></figure>
 <p>这样子就可以打破 RunLoop 和 self 之间的强引用了。</p>
@@ -343,16 +346,20 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div></pre></td><td class="code"><pre><div class="line">#import &quot;LazyInitialization.h&quot;</div><div class="line"></div><div class="line">@interface LazyProxy : NSProxy</div><div class="line">- (instancetype)initWithClass:(Class)class;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation NSObject (LazyInitialization)</div><div class="line">+ (instancetype)lazy &#123;</div><div class="line">    return (id)[[LazyProxy alloc] initWithClass:[self class]];</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation LazyProxy &#123;</div><div class="line">    id _object;// 代理对象</div><div class="line">    Class _objectClass;// 代理类</div><div class="line">    NSInvocation *_initInvocation;// 自定义 init 调用</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithClass:(Class)cls &#123;</div><div class="line">    _objectClass = cls;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)instantiateObject &#123;</div><div class="line">    _object = [_objectClass alloc];</div><div class="line">    if (_initInvocation == nil) &#123;// 允许一些类 [SomeClass lazy] (没有调用 init)</div><div class="line">        _object = [_object init];</div><div class="line">    &#125; else &#123;// 调用自定义 init 方法</div><div class="line">        [_initInvocation invokeWithTarget:_object];</div><div class="line">        [_initInvocation getReturnValue:&amp;_object];</div><div class="line">        _initInvocation = nil;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</div><div class="line">    if (_object == nil) &#123;// _object 没有初始化</div><div class="line">        if (![NSStringFromSelector(selector) hasPrefix:@&quot;init&quot;]) &#123;// 调用 init 开头之外的方法前进行 _object 初始化</div><div class="line">            [self instantiateObject];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return _object;// 将消息转发给 _object</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 调用自定义 init 方法会进入这个方法</div><div class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</div><div class="line">    NSMethodSignature *signature = [_objectClass instanceMethodSignatureForSelector:selector];</div><div class="line">    return signature;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 保存自定义 init 方法的调用</div><div class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</div><div class="line">    _initInvocation = invocation;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//----------------------------------------------------------------------------</div><div class="line">// 手工转发 NSProxy 提供的实现</div><div class="line">//----------------------------------------------------------------------------</div><div class="line"></div><div class="line">- (Class)class &#123;</div><div class="line">    if (_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [_object class];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (Class)superclass &#123;</div><div class="line">    if (_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [_object superclass];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)conformsToProtocol:(Protocol *)aProtocol &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object conformsToProtocol:aProtocol];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSString *)description &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object description];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSUInteger)hash &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object hash];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)isEqual:(id)obj &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object isEqual:obj];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)isKindOfClass:(Class)aClass &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object isKindOfClass:aClass];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)isMemberOfClass:(Class)aClass &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object isMemberOfClass:aClass];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)respondsToSelector:(SEL)selector &#123;</div><div class="line">    if (self-&gt;_object == nil) &#123;</div><div class="line">        [self instantiateObject];</div><div class="line">    &#125;</div><div class="line">    return [self-&gt;_object respondsToSelector:selector];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://andyarvanitis.com/lazy-initialization-for-objective-c/" target="_blank" rel="external">Lazy Initialization for Objective-C</a></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -360,295 +367,32 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/09/13/use-hexo-on-heroku/" rel="next" title="使用 Hexo 搭建博客并且部署到 Heroku">
+                <i class="fa fa-chevron-left"></i> 使用 Hexo 搭建博客并且部署到 Heroku
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/09/13/use-hexo-on-heroku/" itemprop="url">
-                  使用 Hexo 搭建博客并且部署到 Heroku
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-13T16:57:58+08:00" content="2016-09-13">
-              2016-09-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/blog/" itemprop="url" rel="index">
-                    <span itemprop="name">blog</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/13/use-hexo-on-heroku/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/13/use-hexo-on-heroku/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p><a href="https://hexo.io/" target="_blank" rel="external">Hexo</a> 基于 <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> ，运行速度快，支持 Markdown ，支持插件扩展，可以方便地部署到 Heroku 。</p>
-<ul>
-<li>搭建参考：<a href="https://hexo.io/docs/index.html" target="_blank" rel="external">Hexo 文档</a></li>
-<li>部署参考：<a href="https://hexo.io/docs/deployment.html#Heroku" target="_blank" rel="external">Heroku 文档</a></li>
-</ul>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>如果电脑已经具备安装条件，可以使用以下命令快速安装并且通过<a href="http://localhost:4000/" target="_blank" rel="external">本地地址</a>访问博客。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init blog</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<h2 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h2><p>安装 Hexo 之前需要安装 <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 和 <a href="https://git-scm.com/" target="_blank" rel="external">Git</a> 。如果是 Mac 用户，还需要到 App Store 安装 Xcode，安装完毕打开 Xcode 并且去到 Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install 位置安装 command line tools 。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先使用命令安装 Hexo ：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>接着创建一个新的博客目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init blog</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
-<p>运行以上命令之后，生成以下的目录结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── source</div><div class="line">|   ├── _drafts</div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure>
-<ul>
-<li>_config.yml 配置文件</li>
-<li>package.json 项目配置信息和依赖模块</li>
-<li>scaffolds 文章模板</li>
-<li>source 文章源文件</li>
-<li>themes 主题文件</li>
-</ul>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><ul>
-<li>登录 <a href="https://dashboard.heroku.com/apps" target="_blank" rel="external">Heroku</a></li>
-<li>创建新应用</li>
-<li>在 Settings -&gt; Info 里面找到 Git URL ，就是下面将要用到的 repository url</li>
-<li>安装 <a href="https://github.com/hexojs/hexo-deployer-heroku" target="_blank" rel="external">hexo-deployer-heroku</a></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-heroku --save</div></pre></td></tr></table></figure>
-<ul>
-<li>修改 _config.yml 配置文件，将 repository url 替换为上面说到的 Git URL：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: heroku</div><div class="line">  repo: &lt;repository url&gt;</div></pre></td></tr></table></figure>
-<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><ul>
-<li>创建文章：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"New Post"</span></div></pre></td></tr></table></figure>
-<ul>
-<li>本地运行：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<ul>
-<li>生成静态文件：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<ul>
-<li>部署到 Hero：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/13/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-13T15:29:46+08:00" content="2016-09-13">
-              2016-09-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/13/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/13/hello-world/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -656,6 +400,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/18/nsproxy/"
+           data-title="利用 NSProxy 实现弱引用和延迟初始化" data-url="http://yhw.herokuapp.com/2016/10/18/nsproxy/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -675,8 +427,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -726,6 +487,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现弱引用-Weak-Reference"><span class="nav-number">1.</span> <span class="nav-text">实现弱引用(Weak Reference)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现延迟初始化-Lazy-Initialization"><span class="nav-number">2.</span> <span class="nav-text">实现延迟初始化(Lazy Initialization)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -822,6 +594,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
