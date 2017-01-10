@@ -277,6 +277,134 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/10/UIActivityViewController-from-start-to-end/" itemprop="url">
+                  设置UIActivityViewController分享的开始和结束回调
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-10T15:31:01+08:00" content="2017-01-10">
+              2017-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/10/UIActivityViewController-from-start-to-end/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/10/UIActivityViewController-from-start-to-end/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>UIActivityViewController 可以用来做社交化分享，系统内置了许多服务，例如国内的WeChat、QQ、Weibo，国外的Facebook、Twitter等。采用这种分享方式，很容易就可以提供社交化分享功能，而且不需要去各个社交化平台申请 Key 和集成 SDK。</p>
+<h2 id="简单的使用"><a href="#简单的使用" class="headerlink" title="简单的使用"></a>简单的使用</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> text = <span class="string">"Google"</span></div><div class="line"><span class="keyword">let</span> url = <span class="type">NSURL</span>(string: <span class="string">"https://www.google.com"</span>)</div><div class="line"><span class="keyword">let</span> activityViewController: <span class="type">UIActivityViewController</span> = <span class="type">UIActivityViewController</span>(activityItems: [text, url], applicationActivities: <span class="literal">nil</span>)</div><div class="line"><span class="keyword">self</span>.present(activityViewController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<h2 id="设置分享的开始回调"><a href="#设置分享的开始回调" class="headerlink" title="设置分享的开始回调"></a>设置分享的开始回调</h2><p>如果要为不同平台提供不同的分享内容，可以通过继承 UIActivityItemProvider 并且实现必要的协议方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">activityViewController</span><span class="params">(<span class="number">_</span> activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivityType)</span></span> -&gt; <span class="type">Any</span>? &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"=====share url start====="</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> activityType.rawValue == <span class="string">"com.tencent.xin.sharetimeline"</span> &#123;<span class="comment">// WeChat</span></div><div class="line">        <span class="keyword">return</span> <span class="type">NSURL</span>(string: <span class="string">"https://weixin.qq.com"</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> shareUrl = <span class="type">NSURL</span>(string: <span class="string">"https://www.google.com"</span>)</div><div class="line">    <span class="keyword">return</span> shareUrl</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置分享的结束回调"><a href="#设置分享的结束回调" class="headerlink" title="设置分享的结束回调"></a>设置分享的结束回调</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">activityViewController.completionWithItemsHandler = &#123; (activityType, completed, returnedItems, activityError) <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"=====share <span class="subst">\(activityType)</span> end====="</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="具体的使用"><a href="#具体的使用" class="headerlink" title="具体的使用"></a>具体的使用</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> url = <span class="type">UrlActivityItemProvider</span>(placeholderItem: <span class="string">"placeholder"</span>)</div><div class="line"><span class="keyword">let</span> activityViewController: <span class="type">UIActivityViewController</span> = <span class="type">UIActivityViewController</span>(activityItems: [url], applicationActivities: <span class="literal">nil</span>)</div><div class="line">activityViewController.completionWithItemsHandler = &#123; (activityType, completed, returnedItems, activityError) <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"=====share <span class="subst">\(activityType)</span> end====="</span>)</div><div class="line">&#125;</div><div class="line"><span class="keyword">self</span>.present(activityViewController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>如果需要分享除了url之外的内容，可以继续通过继承 UIActivityItemProvider 并且实现必要的协议方法，返回需要的数据类型，例如 String、Image等，每一个子类处理一种类型的数据，具体见 Demo。</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>WeChat 必须提供 URL 分享内容，否则会报错“抱歉，暂时不支持此类型内容的分享”。</p>
+<p>Demo地址: <a href="https://github.com/yehuanwen/UIActivityViewControllerDemo" target="_blank" rel="external">Setup UIActivityViewController share start and end callback</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/11/01/using-vapor-and-deploy-to-heroku/" itemprop="url">
                   使用Vapor构建Web app并且部署在Heroku
                 </a>
@@ -819,7 +947,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -827,7 +955,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -873,7 +1001,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
